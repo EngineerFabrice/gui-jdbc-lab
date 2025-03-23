@@ -1,0 +1,85 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package fabrice.javalab2;
+
+/**
+ *
+ * @author USER
+ */
+public class LoginUi extends JFrame implements ActionListener {
+    private JTextField usernameField;
+    private JPasswordField passwordField;
+    private JButton loginButton;
+
+    public LoginUi() {
+        setTitle("Login Page");
+        setSize(400, 250);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null); // Center the window
+        setLayout(new BorderLayout(10, 10));
+        
+        // Apply Nimbus Look and Feel
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+            SwingUtilities.updateComponentTreeUI(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panel.setBackground(Color.WHITE);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        
+        JLabel titleLabel = new JLabel("Welcome to Secure Login", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        titleLabel.setForeground(new Color(0, 102, 204));
+        add(titleLabel, BorderLayout.NORTH);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(new JLabel("Username:"), gbc);
+        
+        gbc.gridx = 1;
+        usernameField = new JTextField(15);
+        panel.add(usernameField, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(new JLabel("Password:"), gbc);
+        
+        gbc.gridx = 1;
+        passwordField = new JPasswordField(15);
+        panel.add(passwordField, gbc);
+        
+        loginButton = new JButton("Login");
+        loginButton.setFont(new Font("Arial", Font.BOLD, 14));
+        loginButton.setBackground(new Color(0, 153, 76));
+        loginButton.setForeground(Color.WHITE);
+        loginButton.setFocusPainted(false);
+        loginButton.addActionListener(this);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        panel.add(loginButton, gbc);
+        
+        add(panel, BorderLayout.CENTER);
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        String password = new String(passwordField.getPassword());
+        if (password.length() >= 8 && password.length() <= 12 && password.equals(password.toUpperCase())) {
+            dispose();
+            new FeedbackForm();
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid Password! \nMust be 8-12 uppercase letters.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
